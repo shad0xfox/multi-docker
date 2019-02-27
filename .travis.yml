@@ -1,0 +1,21 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t jerrywen/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run jerrywen/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t jerrywen/multi-client ./client
+  - docker build -t jerrywen/multi-nginx ./nginx
+  - docker build -t jerrywen/multi-server ./server
+  - docker build -t jerrywen/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push jerrywen/multi-client
+  - docker push jerrywen/multi-nginx
+  - docker push jerrywen/multi-server
+  - docker push jerrywen/multi-worker
