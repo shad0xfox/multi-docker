@@ -9,13 +9,13 @@ script:
   - docker run jerrywen/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t jerrywen/multi-client ./client
-  - docker build -t jerrywen/multi-nginx ./nginx
-  - docker build -t jerrywen/multi-server ./server
-  - docker build -t jerrywen/multi-worker ./worker
+  - docker build -t shadowf0x/multi-client ./client
+  - docker build -t shadowf0x/multi-nginx ./nginx
+  - docker build -t shadowf0x/multi-server ./server
+  - docker build -t shadowf0x/multi-worker ./worker
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-  - docker push jerrywen/multi-client
-  - docker push jerrywen/multi-nginx
-  - docker push jerrywen/multi-server
-  - docker push jerrywen/multi-worker
+  - docker push shadowf0x/multi-client
+  - docker push shadowf0x/multi-nginx
+  - docker push shadowf0x/multi-server
+  - docker push shadowf0x/multi-worker
